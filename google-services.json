@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "873676979726",
+    "project_id": "vatrenabaza2",
+    "storage_bucket": "vatrenabaza2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873676979726:android:aa190c0baf67b1a736865f",
+        "android_client_info": {
+          "package_name": "com.ultrahardcorn.VatrenaBaza2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6_spr-Gz7b6-XgjaSav2Ne4kQpEECbEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
