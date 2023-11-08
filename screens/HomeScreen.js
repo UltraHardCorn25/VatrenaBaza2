@@ -78,7 +78,7 @@ export default function HomeScreen() {
     const obavestenjaRef = query(temp, orderBy("date", "desc"));
     const subscriber = onSnapshot(obavestenjaRef, {
       next: (snapshot) => {
-        const obavestenja = []; //zbog ovog dela je convertovano u TSX
+        const obavestenja = [];
         snapshot.docs.forEach((doc) => {
           obavestenja.push({
             id: doc.id,
