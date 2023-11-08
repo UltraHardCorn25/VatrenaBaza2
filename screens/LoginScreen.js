@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: 'red',
   },
   inputContainer: {
     width: "80%",
