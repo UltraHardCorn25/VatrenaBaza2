@@ -7,6 +7,7 @@ import {
   View,
   FlatList,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import messaging from "@react-native-firebase/messaging";
@@ -26,7 +27,7 @@ import { option } from "./LoginScreen";
 
 const screenWidth = Dimensions.get("window").width;
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   const [obavestenjaArray, setObavestenja] = useState([]);
   //request premission from the user to send notifications
   const requestUserPermission = async () => {
@@ -99,10 +100,17 @@ export default function HomeScreen() {
       dateNew = item.date;
       if (dateNew.toDate().toDateString() === date.toDate().toDateString()) {
         return (
-          <View style={styles.obavestenje}>
+          <TouchableOpacity style={styles.obavestenje}
+          activeOpacity={0.7} 
+          onPress={()=>{
+            navigation.navigate('Obavestenje', {
+              title: item.title,
+              body:item.body,
+            });
+          }}>
             <Text style={styles.obavestenjeTitle}>{item.title}</Text>
             <Text style={styles.obavestenjeBody}>{item.body}</Text>
-          </View>
+          </TouchableOpacity>
         );
       } else {
         date = dateNew;
@@ -113,10 +121,17 @@ export default function HomeScreen() {
                 {dateNew.toDate().toDateString()}
               </Text>
             </View>
-            <View style={styles.obavestenje}>
+            <TouchableOpacity style={styles.obavestenje}
+            activeOpacity={0.7} 
+            onPress={()=>{
+              navigation.navigate('Obavestenje', {
+                title: item.title,
+                body:item.body,
+              });
+            }}>
               <Text style={styles.obavestenjeTitle}>{item.title}</Text>
               <Text style={styles.obavestenjeBody}>{item.body}</Text>
-            </View>
+            </TouchableOpacity>
           </View>
         );
       }
@@ -132,7 +147,6 @@ export default function HomeScreen() {
         end={[0.7, 0.6]}
         style={styles.background}
       >
-        <Text style={styles.Header}>Obaveštenja</Text>
         {obavestenjaArray.length > 0 && (
           <View style={styles.list}>
             <FlatList
@@ -140,6 +154,7 @@ export default function HomeScreen() {
               data={obavestenjaArray.sort()}
               renderItem={renderObavestenje}
               keyExtractor={(obavestenje) => obavestenje.id}
+              showsVerticalScrollIndicator={false}
             />
           </View>
         )}
@@ -154,28 +169,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  Header: {
-    fontSize: 25,
-    marginBottom: 10,
-    color: "white",
-  },
   list: {
-    paddingTop: 10,
     flex: 1,
     alignItems: "center",
     width: "80%",
-    borderTopWidth: 1,
-    borderTopColor: "white",
   },
   background: {
     width: "100%",
     height: "100%",
-    paddingTop: 30,
     opacity: 0.95,
     alignItems: "center",
+    
   },
   flatList: {
     width: screenWidth,
+    
   },
   obavestenje: {
     height: 100,
@@ -185,9 +193,12 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white",
     borderRadius: 10,
-    borderColor: "gray",
-    borderWidth: 1,
-    shadowColor: "gray",
+    //borderColor: "gray",
+    //borderWidth: 1,
+    elevation: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: 5 },
+    shadowRadius: 1,
   },
   obavestenjeTitle: {
     fontSize: 20,

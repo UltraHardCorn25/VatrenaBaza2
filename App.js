@@ -1,19 +1,96 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Alert, Button } from "react-native";
+import { StyleSheet, Text, View, Alert, Button, TouchableOpacity,Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
+import Settings from "./screens/Settings";
+import Obavestenje from "./screens/Obavestenje";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Navigator
+        screenOptions={{
+          gestureEnabled: true,
+          gestureDirection: 'horizontal'
+        }}
+        headerMode="float"
+        animation="fade"
+      >
+        <Stack.Screen name="Login"
+        component={LoginScreen} 
+        options={{
+            title: 'Odaberi razred',
+            headerStyle: {
+              backgroundColor: '#65C8FF',
+              height: 100,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontSize: 22,
+              textTransform: 'uppercase',
+            },
+          }}
+        />
+        <Stack.Screen name="Main"
+        component={HomeScreen} 
+        options={({navigation})=>({
+            headerBackVisible: false,
+            title: 'Obavestenja',
+            headerStyle: {
+              backgroundColor: '#65C8FF',
+              height: 100,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              marginLeft: 10,
+              fontSize: 22,
+              textTransform: 'uppercase',
+            },
+            headerRight: () => (
+              <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+                <Image
+                  style={{ width: 25, height: 25, marginRight:25 }}
+                  source={require('./images/cog-wheel.png')}
+                />
+              </TouchableOpacity>
+            ),
+        })}
+        />
+        <Stack.Screen name="Settings" 
+        component={Settings} 
+        options={{
+            title: 'Settings',
+            headerStyle: {
+              backgroundColor: '#65C8FF',
+              height: 100,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontSize: 22,
+              textTransform: 'uppercase',
+            },
+          }}
+        />
+        <Stack.Screen name="Obavestenje" 
+        component={Obavestenje} 
+        options={{
+            title: 'Obavestenje',
+            headerStyle: {
+              backgroundColor: '#65C8FF',
+              height: 100,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontSize: 22,
+              textTransform: 'uppercase',
+            },
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
