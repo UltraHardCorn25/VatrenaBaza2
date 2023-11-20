@@ -59,6 +59,7 @@ export default function Settings({navigation}) {
       <TouchableOpacity style={styles.option} activeOpacity={0.8}
       onPress={()=> navigation.navigate('Login')}>
         <Text style={styles.optionText}>Promeni razred</Text>
+        <Text style={styles.optionText}>razred</Text>
         <Image
         style={{ width: 25, height: 25, marginRight:12 }}
         source={require('../images/dots-menu.png')}

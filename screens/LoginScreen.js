@@ -104,13 +104,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    color: 'white',
+    color: Colors.headerText,
     fontWeight: '700',
     fontSize: 16,
   },
   inputes: {
-    backgroundColor: '#0782F9',
-    color: 'white',
+    backgroundColor: Colors.accent,
+    color: Colors.headerText,
     width: 120,
     paddingVertical: 10,
     paddingHorizontal: 20,
