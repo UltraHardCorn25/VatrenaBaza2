@@ -1,4 +1,4 @@
-import { LinearGradient } from "expo-linear-gradient";
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   Button,
   StyleSheet,
@@ -8,9 +8,9 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import messaging from "@react-native-firebase/messaging";
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import messaging from '@react-native-firebase/messaging';
 import {
   Timestamp,
   addDoc,
@@ -18,14 +18,15 @@ import {
   onSnapshot,
   orderBy,
   query,
-} from "firebase/firestore";
-import { db } from "../firebase";
-import firestore from "@react-native-firebase/firestore";
-import { option } from "./LoginScreen";
+} from 'firebase/firestore';
+import { db } from '../firebase';
+import firestore from '@react-native-firebase/firestore';
+import { option } from './LoginScreen';
+import Colors from '../Color';
 
 // Add a new subscription to a user's document
 
-const screenWidth = Dimensions.get("window").width;
+const screenWidth = Dimensions.get('window').width;
 
 export default function HomeScreen({navigation}) {
   const [obavestenjaArray, setObavestenja] = useState([]);
@@ -37,14 +38,14 @@ export default function HomeScreen({navigation}) {
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
     if (enabled) {
-      console.log("Authorization status:", authStatus);
+      console.log('Authorization status:', authStatus);
     }
   };
 
   //Get and show notifications
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      console.log("Message handled in the background!", remoteMessage);
+      console.log('Message handled in the background!', remoteMessage);
     });
     if (requestUserPermission()) {
       messaging()
@@ -53,7 +54,7 @@ export default function HomeScreen({navigation}) {
           console.log(token);
         });
     } else {
-      console.log("Failed token status", authStatus);
+      console.log('Failed token status', authStatus);
     }
 
     messaging().onNotificationOpenedApp(async (remoteMessage) => {
@@ -75,8 +76,8 @@ export default function HomeScreen({navigation}) {
 
   //dobijanje obavestenja
   useEffect(() => {
-    const temp = collection(db, "Obavestenja");
-    const obavestenjaRef = query(temp, orderBy("date", "desc"));
+    const temp = collection(db, 'Obavestenja');
+    const obavestenjaRef = query(temp, orderBy('date', 'desc'));
     const subscriber = onSnapshot(obavestenjaRef, {
       next: (snapshot) => {
         const obavestenja = [];
@@ -101,11 +102,13 @@ export default function HomeScreen({navigation}) {
       if (dateNew.toDate().toDateString() === date.toDate().toDateString()) {
         return (
           <TouchableOpacity style={styles.obavestenje}
-          activeOpacity={0.7} 
+          activeOpacity={0.8} 
           onPress={()=>{
             navigation.navigate('Obavestenje', {
               title: item.title,
               body:item.body,
+              date:dateNew.toDate().toDateString(),
+              class: item.razred,
             });
           }}>
             <Text style={styles.obavestenjeTitle}>{item.title}</Text>
@@ -122,11 +125,13 @@ export default function HomeScreen({navigation}) {
               </Text>
             </View>
             <TouchableOpacity style={styles.obavestenje}
-            activeOpacity={0.7} 
+            activeOpacity={0.8} 
             onPress={()=>{
               navigation.navigate('Obavestenje', {
                 title: item.title,
                 body:item.body,
+                date:dateNew.toDate().toDateString(),
+                class: item.razred,
               });
             }}>
               <Text style={styles.obavestenjeTitle}>{item.title}</Text>
@@ -142,7 +147,7 @@ export default function HomeScreen({navigation}) {
     <View style={styles.container}>
       <LinearGradient
         // Background Linear Gradient
-        colors={["#65C8FF", "white"]}
+        colors={[Colors.primary, Colors.secondary]}
         start={[0.2, 0.2]}
         end={[0.7, 0.6]}
         style={styles.background}
@@ -166,19 +171,19 @@ export default function HomeScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   list: {
     flex: 1,
-    alignItems: "center",
-    width: "80%",
+    alignItems: 'center',
+    width: '80%',
   },
   background: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     opacity: 0.95,
-    alignItems: "center",
+    alignItems: 'center',
     
   },
   flatList: {
@@ -187,31 +192,33 @@ const styles = StyleSheet.create({
   },
   obavestenje: {
     height: 100,
-    width: "90%",
+    width: '90%',
     marginVertical: 10,
     marginLeft: screenWidth * 0.05,
     padding: 10,
-    backgroundColor: "white",
+    backgroundColor: Colors.noticationBG,
     borderRadius: 10,
-    //borderColor: "gray",
+    //borderColor: 'gray',
     //borderWidth: 1,
     elevation: 10,
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOffset: { width: 2, height: 5 },
     shadowRadius: 1,
   },
   obavestenjeTitle: {
     fontSize: 20,
+    color: Colors.textPrimary,
   },
   obavestenjeBody: {
     flexShrink: 1,
+    color: Colors.textSecondary,
   },
   datum: {
     marginTop: 30,
     marginLeft: screenWidth * 0.06,
   },
   datumText: {
-    color: "#646464",
+    color: Colors.textSecondary,
     fontSize: 14,
   },
 });
@@ -225,5 +232,5 @@ const styles = StyleSheet.create({
 //     console.error(`Error subscribing to ${topic}:`, error);
 //   }
 // };
-// subscribeToTopic("school");
-// subscribeToTopic("4ITS");
+// subscribeToTopic('school');
+// subscribeToTopic('4ITS');

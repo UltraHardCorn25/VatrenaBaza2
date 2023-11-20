@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Switch, TouchableOpacity,Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
+import Colors from '../Color';
 
 export default function Settings({navigation}) {
 
@@ -8,31 +9,33 @@ export default function Settings({navigation}) {
   const [darkMode,setDarkMode] = useState(false);
 
   const toggleNotification = () => {setNotifications(previousState => !previousState)
-    console.log("Notification logic");
+    console.log('Notification logic');
   };
   const toggleDarkMode = () => setDarkMode(previousState => !previousState);
 
     return (
-      <View style={styles.container}><LinearGradient
+      <View style={styles.container}>
+      <LinearGradient
       // Background Linear Gradient
-      colors={['#ACE1FF','#e0f4ff']}
+      colors={[Colors.primary,Colors.secondary]}
       start={[0.3, 0]}
       end={[0.7,0.6]}
       style={styles.background}
-    >
+      >
     
     
       <Text style={styles.lineText}>Preference</Text>
       <View style={styles.line}></View>
 
-      <TouchableOpacity style={styles.option} activeOpacity={1} onPress={()=>{
+      <TouchableOpacity style={styles.option} activeOpacity={0.8}
+      onPress={()=>{
         toggleNotification();
       }}>
         <Text style={styles.optionText}>Notifikacije</Text>
         <Switch
           trackColor={{false: '#b5b5b5', true: '#65C8FF'}}
           thumbColor={notifications ? '#e0f4ff' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
+          ios_backgroundColor='#3e3e3e'
           onValueChange={toggleNotification}
           value={notifications}
           style={styles.optionSwitch}
@@ -47,13 +50,13 @@ export default function Settings({navigation}) {
         <Switch
           trackColor={{false: '#b5b5b5', true: '#65C8FF'}}
           thumbColor={notifications ? '#e0f4ff' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
+          ios_backgroundColor='#3e3e3e'
           onValueChange={toggleDarkMode}
           value={darkMode}
           style={styles.optionSwitch}
         />
       </TouchableOpacity> */}
-      <TouchableOpacity style={styles.option} activeOpacity={1}
+      <TouchableOpacity style={styles.option} activeOpacity={0.8}
       onPress={()=> navigation.navigate('Login')}>
         <Text style={styles.optionText}>Promeni razred</Text>
         <Image
@@ -65,14 +68,12 @@ export default function Settings({navigation}) {
       <Text style={styles.lineText}>O Aplikaciji</Text>
       <View style={styles.line}></View>
 
-      <TouchableOpacity style={styles.option} activeOpacity={1}>
-        <Text style={styles.optionText}>O autorima</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.option} activeOpacity={1}>
+      <TouchableOpacity style={styles.option} activeOpacity={0.8}
+      onPress={()=> navigation.navigate('About')}>
         <Text style={styles.optionText}>O aplikaciji</Text>
       </TouchableOpacity>
 
-    </LinearGradient>
+      </LinearGradient>
       </View>
     );
 }
@@ -98,20 +99,21 @@ export default function Settings({navigation}) {
       alignItems:'center',
       padding: 20,
 
-      backgroundColor: 'white',
+      backgroundColor: Colors.noticationBG,
       marginVertical: 10,
       borderRadius: 10,
       //borderColor: 'gray',
       //borderWidth: 1,
 
       elevation: 10,
-      shadowColor: "#000",
+      shadowColor: Colors.black,
       shadowOffset: { width: 2, height: 5 },
       shadowRadius: 1,
     },
     optionText:{
       fontSize: 17,
       flex:1,
+      color: Colors.textPrimary,
     },
     optionSwitch: {
       flex:1,
@@ -120,11 +122,12 @@ export default function Settings({navigation}) {
     },
     line: {
       width: '100%',
-      backgroundColor: 'gray',
+      backgroundColor: Colors.textPrimary,
       height: 1,
     },
     lineText: {
       marginTop: 10,
       marginBottom: 3,
+      color: Colors.textPrimary,
     }
   });
